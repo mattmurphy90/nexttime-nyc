@@ -21,11 +21,15 @@ app.post('/test3', function (req, res) {
       case 'L':
         feedID = 2;
         route = 'L';
-          break;
+        break;
       case '6':
-      feedID = 1;
-      route = 6;
-          break;
+        feedID = 1;
+        route = 6;
+        break;
+      case '1':
+        feedID = 1;
+        route = 1;
+        break;
       default:
   }
   const mta = new Mta({
@@ -40,7 +44,6 @@ app.post('/test3', function (req, res) {
   })
 if (direction === "N") {
  	 mta.schedule(trainName).then(function (result) {
-     console.log(trainName);
      var currentTime2 = new Date();
      var currentTime = currentTime2.getTime();
      var i;
@@ -54,7 +57,7 @@ if (direction === "N") {
      }
     			var nextTrain = matchesRoute;
           if (nextTrain === undefined) {
-              res.json('NO ' + trainNum + ' TRAINS AT THIS TIME')
+              res.json('NO ' + trainNum + ' TRAINS FROM ' + station + ' Heading ' + directionBound + ' at this time');
           } else {
           var nextTraintimestamp = nextTrain * 1000;
           var nextTrainString = nextTrain.toString();
@@ -66,7 +69,6 @@ if (direction === "N") {
       }
 	});
 } else {
-  console.log(trainName);
   mta.schedule(trainName).then(function (result) {
       var currentTime2 = new Date();
       var currentTime = currentTime2.getTime();
@@ -81,7 +83,7 @@ if (direction === "N") {
       }
          var nextTrain = matchesRoute;
        if (nextTrain === undefined) {
-           res.json('NO ' + trainNum + ' TRAINS AT THIS TIME')
+           res.json('NO ' + trainNum + ' TRAINS FROM ' + station + ' Heading ' + directionBound + ' at this time');
        } else {
          var nextTraintimestamp = nextTrain * 1000;
          var nextTrainString = nextTrain.toString();

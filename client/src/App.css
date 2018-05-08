@@ -1,6 +1,6 @@
 .App {
   text-align: center;
-  min-height: 90vh;
+  min-height: 100vh;
 }
 
 .App-logo {
@@ -9,25 +9,32 @@
 }
 
 .App-header {
-      background-color: lightcoral;
-  box-shadow: 0 4px 8px 0 #ededed, 0 6px 20px 0 #ededed;
-  height: 150px;
-  padding: 20px;
-  color: white;
+    background-color: lightcoral;
+    box-shadow: 0 4px 8px 0 #ededed, 0 6px 20px 0 #ededed;
+    height: 170px;
+    padding: 20px;
+    color: white;
 }
-.train-list2 {
+.train-list2, .refresh {
+    color: white;
+    background-color: #000;
+    opacity: .4;
+    width: 168px;
+    border: 1px solid lightcoral;
+    border-radius: 19px;
+    padding: 19px;
     cursor: pointer;
-      display: none;
-      margin-top: 41px!important;
-      border: 1px solid lightblue;
-      background-color: lightgrey;
-      width: 158px;
-      padding: 15px;
-      justify-content: center;
-      margin: auto;
-      border-radius: 11px;
-      box-shadow: 0 4px 8px 0 #ededed, 0 6px 20px 0 #ededed;
-      color: white;
+    margin: auto;
+    margin-top: 10px;
+}
+
+.train-list2 {
+      margin-bottom: 57px;
+}
+
+.refresh:hover, .train-list2:hover {
+    opacity: .5;
+
 }
 .train img {
   width: 100%;
@@ -71,13 +78,24 @@ select {
   border: 1px solid lightgrey;
 }
 
+.trainName.trainName1 {
+  background-color: red;
+  border: 1px solid red;
+}
 
 .trainName.trainName6{
   background-color: green;
   border: 1px solid green;
 }
 
-#chooseDirection, #trainL, #train6, #chooseStop {
+.header-subtext {
+  margin: auto;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+#chooseDirection, #trainL, #train6, #train1, #chooseStop, .train-list2 {
   display: none;
 }
 p {
@@ -90,7 +108,7 @@ margin-bottom: 20px;
   height: 40px;
   background-color: lightcyan;
   width: 100%;
-  margin-top: 30px;
+  margin-top: -40px;
 }
 .App-title {
   font-size: 3em;
@@ -111,7 +129,7 @@ margin-bottom: 20px;
 }
 
 .x-out img {
-  width: 100%;
+  width: 20px;
 }
 .trainsShown {
   display: flex;
@@ -136,6 +154,7 @@ margin: auto;
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
+  margin-bottom: 80px!important;
 }
 
 .wrapper {
@@ -145,10 +164,13 @@ margin: auto;
   font-size: large;
   width: 100%;
 }
+.train-text {
+      width: 85%;
+}
 
 @media only screen and (max-width: 600px) {
   .App-header {
-    height: 218px!important;
+    height: 232px!important;
   }
   .shownTrainItem {
     justify-content: space-between;
@@ -158,7 +180,7 @@ margin: auto;
 }
 
 .trainName {
-    width: 33px!important;
+    width: 25px!important;
 }
 
 .x-out {
@@ -167,6 +189,10 @@ margin: auto;
 
 .train-text {
       margin: 0px 10px 0px 10px;
+}
+
+.x-out img {
+    width: 32px!important;
 }
 
 .trainsShown {

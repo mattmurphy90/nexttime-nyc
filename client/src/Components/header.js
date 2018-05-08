@@ -18,6 +18,7 @@ export default class Header extends Component {
         <img src="https://4vector.com/i/free-vector-train-clip-art_109906_Train_clip_art_hight.png" className="App-logo" alt="logo" />
         <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/NYCS-bull-trans-6.svg/400px-NYCS-bull-trans-6.svg.png" className="App-logo" alt="logo" />
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/C_Train_%281985-1987%29.svg/1024px-C_Train_%281985-1987%29.svg.png" className="App-logo" alt="logo" />
+        <p className="header-subtext">Simple Interface that Auto-tracks your regular Train and Bus Lines</p>
       </header>
     );
   }

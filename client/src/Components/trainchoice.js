@@ -40,7 +40,7 @@ callApi = async (trainStop) => {
         <div className="train-list" id="tL">
 
           <div onClick={event => this.props.assign_newState('L')} className="train">  <img src="https://i.pinimg.com/originals/21/31/82/21318277854c0c30da9d4503b003f384.jpg" alt="L TRAIN" /></div>
-          <div className="train">  <img src="https://4vector.com/i/free-vector-train-clip-art_109906_Train_clip_art_hight.png" alt="1 TRAIN" /></div>
+          <div onClick={event => this.props.assign_newState('1')} className="train">  <img src="https://4vector.com/i/free-vector-train-clip-art_109906_Train_clip_art_hight.png" alt="1 TRAIN" /></div>
           <div onClick={event => this.props.assign_newState('6')} className="train">  <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/NYCS-bull-trans-6.svg/400px-NYCS-bull-trans-6.svg.png" alt="6 TRIN" /></div>
         </div>
       </div>

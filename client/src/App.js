@@ -5,6 +5,7 @@ import Trainlist from './Components/trainchoice';
 import Direction from './Components/chooseDirection';
 import Findstop from './Components/findstop';
 import Showtraintimes from './Components/show_trains';
+import Refresh from './Components/refresh_trains';
 class App extends Component {
 
   constructor(props) {
@@ -19,6 +20,7 @@ class App extends Component {
        trackedTrains: [],
        trackedTrainDirections: [],
        trainNumbers: [],
+       trackedDirectionbounds: [],
        directionBound: '',
         time: d.toLocaleTimeString()
      }
@@ -27,11 +29,34 @@ class App extends Component {
   }
 
   countingSecond() {
-    console.log(this.state);
-//    for (i = 0; i < this.)
-    this.setState({
-      time: 'test'
-    })
+    var i;
+    var getResponse = [];
+//    console.log(getResponse);
+    for (i = 0; i < this.state.trackedTrains.length; i ++) {
+      let reqBody = {
+        train: this.state.trackedTrains[i],
+        direction: this.state.trackedTrainDirections[i],
+        trainnum:  this.state.trainNumbers[i],
+        directionBound: this.state.trackedDirectionbounds[i]
+  };
+                fetch("/test3", {
+                      method: 'POST',
+
+                      body: JSON.stringify(reqBody),
+                      headers: {
+                        'Content-Type': 'application/json'
+                      }
+                    })
+                    .then(function(res){ return res.json(); })
+                    .then(function(data){
+                      getResponse.push(data);
+
+                    })
+
+    }
+    setTimeout(function() {
+      this.setState({ response: getResponse});
+    }.bind(this), 1000);
   }
 
 componentWillUpdate() {
@@ -40,6 +65,7 @@ componentWillUpdate() {
     localStorage.setItem('trainNumbers', localStorageState.trainNumbers);
     localStorage.setItem('trackedTrainDirections', localStorageState.trackedTrainDirections);
     localStorage.setItem('response', localStorageState.response);
+    localStorage.setItem('trackedDirectionbounds', localStorageState.trackedDirectionbounds);
 
 }
 
@@ -47,20 +73,23 @@ componentWillUpdate() {
 
 
 componentWillMount() {
-  setInterval(this.countingSecond, 1000)
+  setInterval(this.countingSecond, 50000)
   if (localStorage.trackedTrains) {
       var str = localStorage.trackedTrains;
       var str2 = localStorage.trainNumbers;
       var str3 = localStorage.trackedTrainDirections;
       var str4 = localStorage.response;
+      var str5 = localStorage.trackedDirectionbounds;
       var res = str.split(",");
       var res2 = str2.split(",");
       var res3 = str3.split(",");
       var res4 = str4.split(",");
+      var res5 = str5.split(",");
       this.setState({ trackedTrains: res })
       this.setState({ trainNumbers: res2 })
       this.setState({ trackedTrainDirections: res3 })
       this.setState({ response: res4 })
+      this.setState({ trackedDirectionbounds: res5 })
   }
 }
 
@@ -69,7 +98,6 @@ componentWillMount() {
       var hideTrainStops = "train" + this.state.newTrain;
       document.getElementById(hideTrainStops).style.display = "none";
     }
-    this.setState({ test: 'test'});
     document.getElementById("tL").style.display = "flex";
     document.getElementById("t").style.display = "block";
     document.getElementById("b2tL").style.display = "none";
@@ -79,6 +107,8 @@ componentWillMount() {
 
   callApi = async (trainStop, trainNumber) => {
     var directionBound2 = this.state.directionBound;
+    var trackedTrainsBound = this.state.trackedDirectionbounds.slice();
+    trackedTrainsBound.push(directionBound2);
     var trackedTrainsArray = this.state.trackedTrains.slice();
     trackedTrainsArray.push(trainStop);
 
@@ -125,11 +155,16 @@ componentWillMount() {
                   this.setState({ trainNumbers: trackedTrainName });
                   this.setState({ trackedTrainDirections : trackedDirections });
                   this.setState({ trackedTrains: trackedTrainsArray });
+                  this.setState({ trackedDirectionbounds: trackedTrainsBound });
 
                   setTimeout(function() {
                     this.setState({ response: this.state.response});
                   }.bind(this), 1000);
         }
+
+
+
+
 
 
 assign_newState(trainName) {
@@ -145,6 +180,10 @@ assign_newState(trainName) {
               this.setState({ newTrainDirection2: "CityHall-Bound" })
               this.setState({ newTrainDirection1: "Bronx-Bound" })
                   break;
+              case '1':
+                  this.setState({ newTrainDirection2: "South Ferry-Bound" })
+                  this.setState({ newTrainDirection1: "Van Cortlandt Park-242-Bound" })
+              break;
               default:
           }
 
@@ -182,6 +221,13 @@ delete_train(trainItem) {
           array4.splice(index, 1);
         }
         this.setState({ trackedTrainDirections: array4 });
+
+        var array5 = this.state.trackedDirectionbounds;
+        index = array5.indexOf(this.state.trackedDirectionbounds[trainItem]);
+        if (index > -1) {
+          array5.splice(index, 1);
+        }
+        this.setState({ trackedTrainDirections: array5 });
 }
 
 assign_newStateDirection(direction , directionBoundforAPI) {
@@ -200,6 +246,8 @@ assign_newStateDirection(direction , directionBoundforAPI) {
           <Header />
 
           <Showtraintimes delete_train={this.delete_train.bind(this)} trainchoice = {this.state}/>
+
+          <Refresh countingSecond={this.countingSecond.bind(this)} response= {this.state.response}/>
 
           <Trainlist assign_newState={this.assign_newState.bind(this)} trainchoice = {this.state}/>
 
